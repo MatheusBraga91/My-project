@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8993226456f744b48bc9b11f4d832351, type: 3}
+  m_Name: EnemyTraining
+  m_EditorClassIdentifier: 
+  characterName: Heavy AI
+  baseHealth: 120
+  basePower: 40
+  baseSpeed: 20
+  baseDefense: 50
+  currentHealth: 0
+  currentPower: 0
+  currentSpeed: 0
+  currentDefense: 0
+  activeHealthBar: 1
+  defaultSkills:
+  - {fileID: 11400000, guid: 0da6b7849e804154d950e7432875c175, type: 2}
+  - {fileID: 11400000, guid: c7cfae4686700104a95a8405f59614ab, type: 2}
+  - {fileID: 11400000, guid: 7103c0b2df0eb1d44b7dcda36f062865, type: 2}
+  - {fileID: 11400000, guid: 57804a4668f0c4e498bfabbfdeb32824, type: 2}
+  passiveSkill: {fileID: 0}
+  trapSkills:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
