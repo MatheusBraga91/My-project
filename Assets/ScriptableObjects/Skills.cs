@@ -22,14 +22,13 @@ public class Skill : ScriptableObject
     public int userDamage; // If the skill damages the user
     public int userHealing; // If the skill heals the user
     public int speedChange; // Changes to user speed (e.g. +10 for speed boost)
-    public int attackChange; // Changes to user attack power
+    public int powerChange; // Changes to user attack power
     public int defenseChange; // Changes to user defense power
 
     // Flags and values for effects on the enemy (target)
     public bool affectsEnemy = false; // Whether the skill affects the enemy (e.g. debuffing)
-    public int enemyDamage; // If the skill damages the enemy
-    public int enemySpeedChange; // Changes to enemy speed (e.g. -5 for slowing down)
-    public int enemyAttackChange; // Changes to enemy attack power
+    public int enemySpeedChange; // Changes to enemy speed (-5 for slowng dowwn)
+    public int enemyPowerChange; // Changes to enemy attack power
     public int enemyDefenseChange; // Changes to enemy defense power
 
     // Virtual function that can be overridden by child classes (like Body Slam) to handle damage calculation
@@ -58,9 +57,9 @@ public class Skill : ScriptableObject
                 user.currentSpeed += speedChange; // Assuming currentSpeed exists in CharacterStats
             }
 
-            if (attackChange != 0)
+            if (powerChange != 0)
             {
-                user.currentPower += attackChange; // Assuming currentPower exists in CharacterStats
+                user.currentPower += powerChange; // Assuming currentPower exists in CharacterStats
             }
 
             if (defenseChange != 0)
@@ -74,20 +73,16 @@ public class Skill : ScriptableObject
     public void ApplyEnemyEffects(CharacterStats enemy)
     {
         if (affectsEnemy)
-        {
-            if (enemyDamage > 0)
-            {
-                enemy.TakeDamage(enemyDamage); // Assuming TakeDamage is also a method for the enemy
-            }
+        {        
 
             if (enemySpeedChange != 0)
             {
                 enemy.currentSpeed += enemySpeedChange; // Assuming currentSpeed exists in CharacterStats
             }
 
-            if (enemyAttackChange != 0)
+            if (enemyPowerChange != 0)
             {
-                enemy.currentPower += enemyAttackChange; // Assuming currentPower exists in CharacterStats
+                enemy.currentPower += enemyPowerChange; // Assuming currentPower exists in CharacterStats
             }
 
             if (enemyDefenseChange != 0)

@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84e72c60aed8d3641b1b07e17797fbf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStats: {fileID: 11400000, guid: 60411d18b639ef64c85db56b66b1f45d, type: 2}
+  playerStats: {fileID: 11400000, guid: a303959e09c3ea74682de8a5a10b44e5, type: 2}
   enemyStats: {fileID: 11400000, guid: d7216fd0006ef8945bdd5118180d0aae, type: 2}
 --- !u!4 &328697996
 Transform:

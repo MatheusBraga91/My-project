@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5dec5b331a0a87b4c85b25a15c749599, type: 3}
-  m_Name: Heal
+  m_Name: WallsDown
   m_EditorClassIdentifier: 
-  skillName: Heal
+  skillName: Walls Down
   power: 0
   cooldown: 0
-  description: 
+  description: The enemy Defense goes down by 5.
   skillCategory: 1
-  affectsUser: 1
+  affectsUser: 0
   userDamage: 0
-  userHealing: 50
+  userHealing: 0
   speedChange: 0
   attackChange: 0
   defenseChange: 0
-  affectsEnemy: 0
+  affectsEnemy: 1
   enemyDamage: 0
   enemySpeedChange: 0
   enemyAttackChange: 0
-  enemyDefenseChange: 0
+  enemyDefenseChange: -5

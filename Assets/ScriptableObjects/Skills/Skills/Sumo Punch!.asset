@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7ab8b373569e7a549b3d58131ac753cb, type: 3}
-  m_Name: HardHead
+  m_Name: Sumo Punch!
   m_EditorClassIdentifier: 
-  skillName: Hard Head
-  power: 50
+  skillName: Sumo Punch!
+  power: 35
   cooldown: 0
-  description: Deal massive damage to the enemy but takes some back
+  description: Does a Sumo chop into the enemy's face!
   skillCategory: 0
-  affectsUser: 1
-  userDamage: 10
+  affectsUser: 0
+  userDamage: 0
   userHealing: 0
   speedChange: 0
   attackChange: 0
   defenseChange: 0
-  affectsEnemy: 1
+  affectsEnemy: 0
   enemyDamage: 0
   enemySpeedChange: 0
   enemyAttackChange: 0

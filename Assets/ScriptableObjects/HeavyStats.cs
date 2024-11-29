@@ -7,68 +7,96 @@ public class CharacterStats : ScriptableObject
     public string characterName = "Heavy";
 
     [Header("Base Stats")]
-    public int baseHealth = 120; // Health per bar
+    public int baseHealth = 120;
     public int basePower = 40;
     public int baseSpeed = 20;
     public int baseDefense = 50;
 
     [Header("Dynamic Stats")]
-    [HideInInspector] public int currentHealth; // Current health in the active bar
+    [HideInInspector] public int currentHealth;
     [HideInInspector] public int currentPower;
-     [HideInInspector] public int currentSpeed;
+    [HideInInspector] public int currentSpeed;
     [HideInInspector] public int currentDefense;
-    [HideInInspector] public int activeHealthBar = 1; // Tracks which health bar is active
+    [HideInInspector] public int activeHealthBar = 1;
 
     [Header("Skills")]
-    public Skill[] defaultSkills = new Skill[4]; // Selected skills
+    public Skill[] defaultSkills = new Skill[4]; 
 
     [Header("Passive Skill")]
-    public Skill passiveSkill;  // Passive skill
+    public PassiveSkill passiveSkill;  
 
-      [Header("Trap Skills")]
-    public TrapSkill[] trapSkills = new TrapSkill[5]; // Trap skills (slots)
+    [Header("Trap Skills")]
+    public TrapSkill[] trapSkills = new TrapSkill[5]; // Slot for 5 trap skills
+    public int availablePoints = 5; // Total points available for trap skills
 
-
-    public void AddTrapSkill(TrapSkill skill)
-{
-    // Loop through the array to find contiguous empty slots
-    for (int i = 0; i <= trapSkills.Length - skill.slotsRequired; i++)
+    // Method to add a trap skill to the character
+    public bool AddTrapSkill(TrapSkill skill)
     {
-        bool slotsAvailable = true;
-
-        // Check if there are enough consecutive empty slots to fit the trap skill
-        for (int j = 0; j < skill.slotsRequired; j++)
+        // Check if we have enough points for the selected skill
+        if (skill.slotRequired <= availablePoints)
         {
-            if (trapSkills[i + j] != null) // If any slot is already occupied
+            // Find the first empty slot to place the skill
+            for (int i = 0; i < trapSkills.Length; i++)
             {
-                slotsAvailable = false;
-                break;
+                if (trapSkills[i] == null)
+                {
+                    // Add the trap skill to the slot
+                    trapSkills[i] = skill;
+
+                    // Subtract the required points from availablePoints
+                    availablePoints -= skill.slotRequired;
+                    Debug.Log($"{skill.skillName} added! Available points left: {availablePoints}");
+                    return true;
+                }
             }
         }
-
-        if (slotsAvailable)
+        else
         {
-            // If enough slots are available, place the skill into these slots
-            for (int j = 0; j < skill.slotsRequired; j++)
-            {
-                trapSkills[i + j] = skill; // Assign the skill to the empty slots
-            }
+            Debug.Log("Not enough points available to add this skill.");
+            return false;
+        }
 
-            Debug.Log("Trap Skill added: " + skill.name);
-            return; // Exit the method after adding the skill
+        return false;
+    }
+
+    // Optional: Method to remove a trap skill and return its points to availablePoints
+    public void RemoveTrapSkill(int index)
+    {
+        if (index >= 0 && index < trapSkills.Length && trapSkills[index] != null)
+        {
+            availablePoints += trapSkills[index].slotRequired; // Restore the points used by the skill
+            trapSkills[index] = null;
+            Debug.Log($"Trap skill removed! Available points left: {availablePoints}");
         }
     }
 
-    // If we reach here, it means there were no sufficient contiguous empty slots
-    Debug.Log("Not enough contiguous slots for this trap skill.");
-}
+    // Optional: Method to check available points
+    public int GetAvailablePoints()
+    {
+        return availablePoints;
+    }
 
-    
+// Method to add a passive skill to the character
+    public bool AddPassiveSkill(PassiveSkill skill)
+    {
+        // Ensure we only add passive skills to the passiveSkill slot
+        if (skill != null && skill is PassiveSkill)
+        {
+            passiveSkill = skill;
+            Debug.Log($"{skill.skillName} added as passive skill.");
+            return true;
+        }
+        else
+        {
+            Debug.LogError("This skill cannot be assigned as a passive skill.");
+            return false;
+        }
+    }
 
 
+    // Initialize stats based on the character's default health bar
     public void Initialize()
     {
-        // Initialize stats based on the first health bar
         currentHealth = baseHealth;
         currentPower = basePower;
         currentSpeed = baseSpeed;
@@ -76,26 +104,23 @@ public class CharacterStats : ScriptableObject
         activeHealthBar = 1;
     }
 
+    // Update stats when changing health bars
     public void UpdateStatsOnHealthBarChange()
     {
-        // Adjust stats based on the active health bar
         switch (activeHealthBar)
         {
-            case 1: // First health bar
+            case 1:
                 currentPower = basePower;
                 currentDefense = baseDefense;
                 break;
-
-            case 2: // Second health bar
-                currentPower = basePower + 5; // Increase power
-                currentDefense = baseDefense - 5; // Decrease defense
+            case 2:
+                currentPower = basePower + 5;
+                currentDefense = baseDefense - 5;
                 break;
-
-            case 3: // Third health bar
-                currentPower = basePower + 10; // Further increase power
-                currentDefense = baseDefense - 10; // Further decrease defense
+            case 3:
+                currentPower = basePower + 10;
+                currentDefense = baseDefense - 10;
                 break;
-
             default:
                 Debug.LogWarning($"{characterName} is out of health bars!");
                 break;
@@ -108,68 +133,52 @@ public class CharacterStats : ScriptableObject
 
         if (currentHealth <= 0 && activeHealthBar < 3)
         {
-            // Move to the next health bar
             activeHealthBar++;
-            currentHealth = baseHealth; // Reset health for the next bar
+            currentHealth = baseHealth;
             UpdateStatsOnHealthBarChange();
-            return true; // Indicates a health bar was depleted
+            return true;
         }
 
-        return currentHealth > 0; // Returns whether the character is still alive
+        return currentHealth > 0;
     }
-
 
     public void Heal(int amount)
-{
-    if (currentHealth + amount <= baseHealth)
     {
-        // Heal within the current health bar's limit
-        currentHealth += amount;
-    }
-    else
-    {
-        // Calculate overflow healing that spills into the next bar
-        int overflowHealing = (currentHealth + amount) - baseHealth;
-
-        currentHealth = baseHealth; // Fill current health bar
-
-        // Move to the next health bar if applicable
-        if (activeHealthBar < 3)
+        if (currentHealth + amount <= baseHealth)
         {
-            activeHealthBar++;
-            currentHealth = overflowHealing > baseHealth ? baseHealth : overflowHealing; // Heal in the next bar
+            currentHealth += amount;
         }
         else
         {
-            Debug.Log("Healing exceeds max health across all bars!");
+            int overflowHealing = (currentHealth + amount) - baseHealth;
+            currentHealth = baseHealth;
+
+            if (activeHealthBar < 3)
+            {
+                activeHealthBar++;
+                currentHealth = overflowHealing > baseHealth ? baseHealth : overflowHealing;
+            }
+            else
+            {
+                Debug.Log("Healing exceeds max health across all bars!");
+            }
         }
+
+        Debug.Log($"Healed by {amount}. Current health: {currentHealth}, Active health bar: {activeHealthBar}");
     }
 
-    Debug.Log($"Healed by {amount}. Current health: {currentHealth}, Active health bar: {activeHealthBar}");
-}
-
-
     public void ModifySpeed(int amount)
-{
-    currentSpeed += amount;
-    // Add any additional logic for speed limits if necessary
+    {
+        currentSpeed += amount;
+    }
+
+    public void ModifyPower(int amount)
+    {
+        currentPower += amount;
+    }
+
+    public void ModifyDefense(int amount)
+    {
+        currentDefense += amount;
+    }
 }
-
-public void ModifyPower(int amount)
-{
-    currentPower += amount;
-    // Add any additional logic for power limits if necessary
-}
-
-public void ModifyDefense(int amount)
-{
-    currentDefense += amount;
-    // Add any additional logic for defense limits if necessary
-}
-
-
-}
-
-
- 
-

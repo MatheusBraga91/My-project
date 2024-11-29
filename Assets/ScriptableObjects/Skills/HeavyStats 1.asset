@@ -17,20 +17,21 @@ MonoBehaviour:
   basePower: 40
   baseSpeed: 20
   baseDefense: 50
-  currentHealth: 0
-  currentPower: 0
-  currentSpeed: 0
-  currentDefense: 0
-  activeHealthBar: 1
+  currentHealth: 120
+  currentPower: 50
+  currentSpeed: 20
+  currentDefense: 40
+  activeHealthBar: 3
   defaultSkills:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  passiveSkill: {fileID: 0}
+  - {fileID: 11400000, guid: c7cfae4686700104a95a8405f59614ab, type: 2}
+  - {fileID: 11400000, guid: 57804a4668f0c4e498bfabbfdeb32824, type: 2}
+  - {fileID: 11400000, guid: c7cfae4686700104a95a8405f59614ab, type: 2}
+  - {fileID: 11400000, guid: c7cfae4686700104a95a8405f59614ab, type: 2}
+  passiveSkill: {fileID: 11400000, guid: e507ed15ce2c92840a2c7ace4569bbcc, type: 2}
   trapSkills:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  availablePoints: 5
