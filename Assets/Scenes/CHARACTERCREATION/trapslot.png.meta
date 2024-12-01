@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 088e4d73a585e55489c87b719892df95
+guid: 8940b647e56d31148877657e2d7a288f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6566935189439779069
-    second: skillselect_0
+      213: 119921348702580780
+    second: trapslot_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: skillselect_0
+      name: trapslot_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1344
-        height: 768
+        width: 42
+        height: 43
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: df0129df2c0722b50800000000000000
-      internalID: 6566935189439779069
+      spriteID: c20376ec4db0aa100800000000000000
+      internalID: 119921348702580780
       vertices: []
       indices: 
       edges: []

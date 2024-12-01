@@ -13,6 +13,9 @@ public class PassiveSkillContainer : MonoBehaviour
     [Header("Skill Description UI")]
     public TMP_Text descriptionText; // Reference to the description container's text element
 
+    [Header("Default Skill Container Reference")]
+    public DefaultSkillContainer defaultSkillContainer; // Reference to the DefaultSkillContainer
+
     void Start()
     {
         // Initialize the Passive Skill buttons and assign the passive skills
@@ -32,6 +35,11 @@ public class PassiveSkillContainer : MonoBehaviour
         for (int i = 0; i < passiveSkillButtons.Length; i++)
         {
             SetButtonText(passiveSkillButtons[i], passiveSkills[i]);
+
+            int index = i; // Capture the correct index for the click listener
+
+            // Add click functionality to replace the passive skill in DefaultSkillContainer
+            passiveSkillButtons[i].onClick.AddListener(() => OnPassiveSkillButtonClick(index));
 
             // Add hover functionality for showing descriptions
             AddHoverHandler(passiveSkillButtons[i], passiveSkills[i]);
@@ -56,6 +64,23 @@ public class PassiveSkillContainer : MonoBehaviour
 
         // Set the passive skill and description text
         hoverHandler.SetPassiveSkill(passiveSkill, descriptionText);
+    }
+
+    // Called when a passive skill button is clicked
+    void OnPassiveSkillButtonClick(int index)
+    {
+        // Ensure the DefaultSkillContainer reference is set
+        if (defaultSkillContainer == null)
+        {
+            Debug.LogError("DefaultSkillContainer reference is not set in PassiveSkillContainer!");
+            return;
+        }
+
+        // Get the selected passive skill
+        PassiveSkill selectedPassiveSkill = passiveSkills[index];
+
+        // Replace the passive skill in DefaultSkillContainer
+        defaultSkillContainer.ReplacePassiveSkill(selectedPassiveSkill);
     }
 
     // Show the description for the specified passive skill

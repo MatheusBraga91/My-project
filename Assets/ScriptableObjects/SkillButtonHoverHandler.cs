@@ -85,7 +85,7 @@ private void ShowCategoryIcon(SkillCategory category)
     }
     else
     {
-        Debug.LogWarning("CategoryIcon is not assigned or missing in the button.");
+      
     }
 }
 

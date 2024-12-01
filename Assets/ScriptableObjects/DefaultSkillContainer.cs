@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro; // Import TextMeshPro namespace
+using TMPro;
 
 public class DefaultSkillContainer : MonoBehaviour
 {
@@ -11,7 +11,7 @@ public class DefaultSkillContainer : MonoBehaviour
     public Button[] skillButtons; // Drag the 4 skill buttons here in the inspector
 
     [Header("Passive Skill Button (Display Only)")]
-    public Button passiveSkillButton; // Drag the passive skill button here in the inspector
+    public Button passiveSkillButton; // 
 
     [Header("Base Stats Texts")]
     public TextMeshProUGUI healthText; // Text for baseHealth
@@ -29,28 +29,23 @@ public class DefaultSkillContainer : MonoBehaviour
 
     private void PopulateSkills()
     {
-        // Ensure we have both the HeavyStats asset and buttons
         if (heavyStats == null || skillButtons.Length == 0) return;
 
-        // Populate the default skills onto the skill buttons
         for (int i = 0; i < heavyStats.defaultSkills.Length; i++)
         {
             if (i < skillButtons.Length && heavyStats.defaultSkills[i] != null)
             {
-                // Set button text to the skill name
                 TextMeshProUGUI buttonText = skillButtons[i].GetComponentInChildren<TextMeshProUGUI>();
                 if (buttonText != null)
                 {
                     buttonText.text = heavyStats.defaultSkills[i].skillName;
                 }
 
-                // Attach an onClick listener to track which button is selected
                 int buttonIndex = i; // Capture the current index
                 skillButtons[i].onClick.AddListener(() => OnDefaultSkillButtonClick(buttonIndex));
             }
         }
 
-        // Display the passive skill on the passive skill button, if assigned
         if (passiveSkillButton != null && heavyStats.passiveSkill != null)
         {
             TextMeshProUGUI passiveButtonText = passiveSkillButton.GetComponentInChildren<TextMeshProUGUI>();
@@ -61,44 +56,29 @@ public class DefaultSkillContainer : MonoBehaviour
         }
     }
 
-    // Display the base stats from HeavyStats in the TextMeshPro objects
     private void DisplayBaseStats()
     {
         if (heavyStats == null) return;
 
         if (healthText != null)
-        {
             healthText.text = $"{heavyStats.baseHealth}";
-        }
 
         if (powerText != null)
-        {
             powerText.text = $"{heavyStats.basePower}";
-        }
 
         if (speedText != null)
-        {
             speedText.text = $"{heavyStats.baseSpeed}";
-        }
 
         if (defenseText != null)
-        {
             defenseText.text = $"{heavyStats.baseDefense}";
-        }
     }
 
-    // Called when a button in the DefaultSkillContainer is clicked
     private void OnDefaultSkillButtonClick(int buttonIndex)
     {
         Debug.Log($"Default skill button {buttonIndex} clicked.");
-
-        // Track the selected button index
         selectedButtonIndex = buttonIndex;
-
-        // Add any visual feedback or functionality for the selected button if needed
     }
 
-    // Public method to replace the skill on the selected button with a new skill
     public void ReplaceSkillInButton(Skill newSkill)
     {
         if (selectedButtonIndex == -1)
@@ -107,16 +87,59 @@ public class DefaultSkillContainer : MonoBehaviour
             return;
         }
 
-        // Replace the skill in HeavyStats with the new skill
         heavyStats.defaultSkills[selectedButtonIndex] = newSkill;
 
-        // Update the button's display with the new skill name
         TextMeshProUGUI buttonText = skillButtons[selectedButtonIndex].GetComponentInChildren<TextMeshProUGUI>();
         if (buttonText != null)
-        {
             buttonText.text = newSkill.skillName;
-        }
 
         Debug.Log($"Skill replaced on button {selectedButtonIndex} with {newSkill.skillName}.");
+    }
+
+
+public void ReplacePassiveSkill(PassiveSkill newPassiveSkill)
+{
+    if (newPassiveSkill == null)
+    {
+        Debug.LogWarning("No passive skill selected!");
+        return;
+    }
+
+    // Replace the passive skill in HeavyStats
+    heavyStats.passiveSkill = newPassiveSkill;
+
+    // Update the button's display with the new passive skill name
+    if (passiveSkillButton != null)
+    {
+        TextMeshProUGUI passiveButtonText = passiveSkillButton.GetComponentInChildren<TextMeshProUGUI>();
+        if (passiveButtonText != null)
+        {
+            passiveButtonText.text = newPassiveSkill.skillName;
+        }
+    }
+
+    Debug.Log($"Passive skill replaced with {newPassiveSkill.skillName}.");
+}
+
+
+
+    public void ReplacePassiveSkillButton(PassiveSkill newPassiveSkill)
+    {
+        if (heavyStats == null)
+        {
+            Debug.LogWarning("HeavyStats is not assigned!");
+            return;
+        }
+
+        heavyStats.passiveSkill = newPassiveSkill;
+
+        if (passiveSkillButton != null)
+        {
+            TextMeshProUGUI buttonText = passiveSkillButton.GetComponentInChildren<TextMeshProUGUI>();
+            if (buttonText != null)
+                buttonText.text = newPassiveSkill.skillName;
+
+            Debug.Log($"Passive skill replaced with {newPassiveSkill.skillName}.");
+        }
     }
 }

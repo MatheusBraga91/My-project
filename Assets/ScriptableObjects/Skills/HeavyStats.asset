@@ -13,20 +13,20 @@ MonoBehaviour:
   m_Name: HeavyStats
   m_EditorClassIdentifier: 
   characterName: Heavy
-  baseHealth: 120
-  basePower: 40
-  baseSpeed: 20
-  baseDefense: 50
+  baseHealth: 200
+  basePower: 200
+  baseSpeed: 200
+  baseDefense: 200
   currentHealth: 120
   currentPower: 45
   currentSpeed: 20
   currentDefense: 45
   activeHealthBar: 2
   defaultSkills:
-  - {fileID: 11400000, guid: 0da6b7849e804154d950e7432875c175, type: 2}
-  - {fileID: 11400000, guid: 7103c0b2df0eb1d44b7dcda36f062865, type: 2}
-  - {fileID: 11400000, guid: c7cfae4686700104a95a8405f59614ab, type: 2}
-  - {fileID: 11400000, guid: 57804a4668f0c4e498bfabbfdeb32824, type: 2}
+  - {fileID: 11400000, guid: 51441492535b7624b8de456541a31573, type: 2}
+  - {fileID: 11400000, guid: 51441492535b7624b8de456541a31573, type: 2}
+  - {fileID: 11400000, guid: 51441492535b7624b8de456541a31573, type: 2}
+  - {fileID: 11400000, guid: 51441492535b7624b8de456541a31573, type: 2}
   passiveSkill: {fileID: 11400000, guid: e507ed15ce2c92840a2c7ace4569bbcc, type: 2}
   trapSkills:
   - {fileID: 11400000, guid: 5861d50b143ed674e8640ca320380562, type: 2}

@@ -9,15 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f30ab970a9a42c46aa6820fb08a2c36, type: 3}
+  m_Script: {fileID: 11500000, guid: 273d99be29c950b4abc2e52ae0bd58bb, type: 3}
   m_Name: MirrorWall
   m_EditorClassIdentifier: 
-  skillName: Mirror Wall
-  description: Reflects the enemy attack back to him!
-  slotRequired: 3
-  lifespan: 2
+  skillName: Mirror Wall!
+  description: Reflect the enemy attack back to him!
+  slotRequired: 2
+  lifespan: 1
   isActivatable: 0
-  activationCategory: 0
-  activationMessage: The enemy activated his trap Skill! You received the damage
-    back!
-  effectMessage: 
+  activationCategory: 1
+  activationMessage: A Trap kill was set.
+  effectMessage: Mirro Wall activated!Damage reflected!
+  activeDuration: 0
+  isActive: 0

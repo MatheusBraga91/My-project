@@ -27,54 +27,9 @@ public class CharacterStats : ScriptableObject
 
     [Header("Trap Skills")]
     public TrapSkill[] trapSkills = new TrapSkill[5]; // Slot for 5 trap skills
-    public int availablePoints = 5; // Total points available for trap skills
 
-    // Method to add a trap skill to the character
-    public bool AddTrapSkill(TrapSkill skill)
-    {
-        // Check if we have enough points for the selected skill
-        if (skill.slotRequired <= availablePoints)
-        {
-            // Find the first empty slot to place the skill
-            for (int i = 0; i < trapSkills.Length; i++)
-            {
-                if (trapSkills[i] == null)
-                {
-                    // Add the trap skill to the slot
-                    trapSkills[i] = skill;
 
-                    // Subtract the required points from availablePoints
-                    availablePoints -= skill.slotRequired;
-                    Debug.Log($"{skill.skillName} added! Available points left: {availablePoints}");
-                    return true;
-                }
-            }
-        }
-        else
-        {
-            Debug.Log("Not enough points available to add this skill.");
-            return false;
-        }
-
-        return false;
-    }
-
-    // Optional: Method to remove a trap skill and return its points to availablePoints
-    public void RemoveTrapSkill(int index)
-    {
-        if (index >= 0 && index < trapSkills.Length && trapSkills[index] != null)
-        {
-            availablePoints += trapSkills[index].slotRequired; // Restore the points used by the skill
-            trapSkills[index] = null;
-            Debug.Log($"Trap skill removed! Available points left: {availablePoints}");
-        }
-    }
-
-    // Optional: Method to check available points
-    public int GetAvailablePoints()
-    {
-        return availablePoints;
-    }
+    
 
 // Method to add a passive skill to the character
     public bool AddPassiveSkill(PassiveSkill skill)

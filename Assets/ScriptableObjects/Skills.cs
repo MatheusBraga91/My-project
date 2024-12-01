@@ -3,6 +3,7 @@ using UnityEngine;
 // Enum for Skill Categories: Attack or Special
 public enum SkillCategory
 {
+    No,
     Attack,  // For skills that deal damage
     Special  // For debuffs, buffs, healing, etc.
 }
