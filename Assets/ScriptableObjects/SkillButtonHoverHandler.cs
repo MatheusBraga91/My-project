@@ -27,7 +27,7 @@ public class SkillButtonHoverHandler : MonoBehaviour, IPointerEnterHandler, IPoi
 
         if (categoryIcon == null)
         {
-            Debug.LogWarning("CategoryIcon not found in the button.");
+           
         }
     }
 

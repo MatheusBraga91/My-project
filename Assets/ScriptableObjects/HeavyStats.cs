@@ -28,6 +28,10 @@ public class CharacterStats : ScriptableObject
     [Header("Trap Skills")]
     public TrapSkill[] trapSkills = new TrapSkill[5]; // Slot for 5 trap skills
 
+       [Header("Character Images")]
+    public Sprite frontViewImage; // Front view image
+    public Sprite backViewImage;  // Back view image
+
 
     
 

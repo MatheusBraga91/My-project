@@ -17,15 +17,14 @@ MonoBehaviour:
   cooldown: 0
   description: Make fun of your enemy components! Enemy attack raises but SPD and
     DEF lowers.
-  skillCategory: 1
-  affectsUser: 0
+  skillCategory: 2
+  affectsUser: 1
   userDamage: 0
   userHealing: 0
   speedChange: 0
-  attackChange: 0
+  powerChange: 0
   defenseChange: 0
   affectsEnemy: 1
-  enemyDamage: 0
-  enemySpeedChange: -10
-  enemyAttackChange: 10
+  enemySpeedChange: -20
+  enemyPowerChange: -10
   enemyDefenseChange: -10

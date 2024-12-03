@@ -13,7 +13,7 @@ public class TrapSkillContainer : MonoBehaviour
 
     [Header("State Management")]
     private List<TrapSkill> addedSkills = new List<TrapSkill>();
-    private List<List<int>> skillSlots = new List<List<int>>(); // To track the slots each skill occupies
+    private List<int> skillSlotIndices = new List<int>(); // Track the starting indices of each skill's slots
     private int usedSlots = 0;
     private const int maxSlots = 5;
 
@@ -38,7 +38,7 @@ public class TrapSkillContainer : MonoBehaviour
     {
         // Clear any existing skills first
         addedSkills.Clear();
-        skillSlots.Clear();
+        skillSlotIndices.Clear();
         usedSlots = 0;
 
         // Iterate through character's trap skills and display them
@@ -63,44 +63,38 @@ public class TrapSkillContainer : MonoBehaviour
         // Add the skill to the list
         addedSkills.Add(skill);
 
-        // Track the slots the skill occupies
-        List<int> occupiedSlots = new List<int>();
+        // Track the starting index of this skill's slots
+        skillSlotIndices.Add(usedSlots);
 
-        // Add the skill to characterStats
+        // Track the skill in characterStats
         for (int i = 0; i < characterStats.trapSkills.Length; i++)
         {
             if (characterStats.trapSkills[i] == null)
             {
-                characterStats.trapSkills[i] = skill; // Assign the skill to the first empty slot in characterStats
-                occupiedSlots.Add(i); // Track the slot index
-                if (occupiedSlots.Count == skill.slotRequired)
-                {
-                    break;
-                }
+                characterStats.trapSkills[i] = skill;
+                break;
             }
         }
-
-        skillSlots.Add(occupiedSlots); // Store the occupied slots for this skill
 
         // Find the next available button
         for (int i = 0; i < trapSkillButtons.Length; i++)
         {
-            if (!trapSkillButtons[i].gameObject.activeSelf) // Check if the button is hidden
+            if (!trapSkillButtons[i].gameObject.activeSelf)
             {
                 // Activate the button
                 trapSkillButtons[i].gameObject.SetActive(true);
 
                 // Set the skill name as button text
                 TMP_Text buttonText = trapSkillButtons[i].GetComponentInChildren<TMP_Text>();
-                buttonText.text = skill.skillName;
+                buttonText.text = $"{skill.skillName}";
 
-                // Update slot visuals
-                UpdateSlots(skill.slotRequired, 0.3f);
-                usedSlots += skill.slotRequired;
-
-                break; // Exit the loop once the button is assigned
+                break;
             }
         }
+
+        // Update the used slots count and slot visuals
+        UpdateSlots(usedSlots, skill.slotRequired, 0.3f); // Set transparency for new slots
+        usedSlots += skill.slotRequired;
     }
 
     // Remove the last TrapSkill
@@ -112,64 +106,52 @@ public class TrapSkillContainer : MonoBehaviour
             return;
         }
 
-        // Get the last skill and remove it
+        // Get the last skill and its starting slot index
         TrapSkill lastSkill = addedSkills[addedSkills.Count - 1];
+        int startSlot = skillSlotIndices[addedSkills.Count - 1];
+        int slotsToFree = lastSkill.slotRequired;
+
+        // Remove the skill and its slot tracking
         addedSkills.RemoveAt(addedSkills.Count - 1);
+        skillSlotIndices.RemoveAt(addedSkills.Count);
 
         // Remove the skill from characterStats
-        List<int> occupiedSlots = skillSlots[skillSlots.Count - 1];
-        skillSlots.RemoveAt(skillSlots.Count - 1);
-
         for (int i = 0; i < characterStats.trapSkills.Length; i++)
         {
             if (characterStats.trapSkills[i] == lastSkill)
             {
-                characterStats.trapSkills[i] = null; // Remove the skill from characterStats
+                characterStats.trapSkills[i] = null;
+                break;
             }
         }
 
-        // Restore the transparency of all slots the removed skill occupied
-        foreach (int slotIndex in occupiedSlots)
-        {
-            UpdateSlotTransparency(slotIndex, 1.0f);
-        }
+        // Update slot visuals before decreasing the count
+        UpdateSlots(startSlot, slotsToFree, 1.0f); // Restore transparency for freed slots
 
-        // Decrease used slots
-        usedSlots -= lastSkill.slotRequired;
+        // Decrease the used slots count
+        usedSlots -= slotsToFree;
 
         // Deactivate the last button and clear its text
         for (int i = trapSkillButtons.Length - 1; i >= 0; i--)
         {
-            if (trapSkillButtons[i].gameObject.activeSelf) // Find the last active button
+            if (trapSkillButtons[i].gameObject.activeSelf)
             {
                 // Deactivate the button
                 trapSkillButtons[i].gameObject.SetActive(false);
 
                 // Clear the button's text
                 TMP_Text buttonText = trapSkillButtons[i].GetComponentInChildren<TMP_Text>();
-                buttonText.text = ""; // Clear text
+                buttonText.text = "";
 
-                break; // Exit the loop once the button is cleared
+                break;
             }
         }
     }
 
-    // Update the transparency of a specific slot
-    void UpdateSlotTransparency(int slotIndex, float transparency)
+    // Update slot images' transparency for adding or removing skills
+    void UpdateSlots(int startSlot, int slotCount, float transparency)
     {
-        if (slotIndex >= 0 && slotIndex < slotImages.Length)
-        {
-            Color color = slotImages[slotIndex].color;
-            color.a = transparency;
-            slotImages[slotIndex].color = color;
-        }
-    }
-
-    // Update slot images' transparency for adding new skills
-    void UpdateSlots(int slotChange, float transparency)
-    {
-        int startSlot = usedSlots;
-        int endSlot = startSlot + Mathf.Abs(slotChange);
+        int endSlot = startSlot + slotCount;
 
         for (int i = startSlot; i < endSlot; i++)
         {

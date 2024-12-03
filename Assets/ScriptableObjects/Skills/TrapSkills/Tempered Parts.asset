@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: Armor Upgrade!
   description: Increase your DEF stats with newly tempered parts!
-  slotRequired: 3
+  slotRequired: 2
   lifespan: 2
   isActivatable: 1
   activationCategory: 0
