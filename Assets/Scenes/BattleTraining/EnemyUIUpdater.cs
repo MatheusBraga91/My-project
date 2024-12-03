@@ -9,7 +9,6 @@ public class EnemyUIUpdater : MonoBehaviour
     public TextMeshProUGUI healthText;  // Reference to the health text UI
     public Image healthBarImage; // Reference to the health bar image UI (fillable health bar)
 
-
     private CharacterStats defender; // Variable to store the current defender (AI character)
 
     void Start()

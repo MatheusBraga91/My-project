@@ -48,7 +48,7 @@ public class UserUIUpdater : MonoBehaviour
         }
     }
 
-    void UpdateHealthUI()
+   public void UpdateHealthUI()
     {
         if (BattleManager.userCharacterClone != null)
         {

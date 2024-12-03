@@ -6,6 +6,8 @@ public class BattleManager : MonoBehaviour
     public UserPanelController userPanelController;
     public EnemyUIUpdater enemyUIUpdater;
 
+    public UserUIUpdater userUIUpdater;
+
 
     public static CharacterStats aiCharacterClone; // Static so it persists across scenes
     public static CharacterStats userCharacterClone;
@@ -158,6 +160,46 @@ public class BattleManager : MonoBehaviour
         }
     }
 
+        // Apply damage to the user (self-inflicted damage)
+        if (skill.userDamage > 0)
+        {
+            Debug.Log($"{attacker.characterName} takes {skill.userDamage} damage from {skill.skillName}!");
+            attacker.TakeDamage(skill.userDamage); // Assuming TakeDamage reduces health and handles related logic
+        }
+
+        // Update user UI (similar to how enemy UI is updated)
+        if (userUIUpdater != null) // Assuming you have a playerUIUpdater like enemyUIUpdater
+        {
+            userUIUpdater.UpdateHealthUI();
+        }
+
+        // Apply other user effects like healing or stat changes
+        if (skill.userHealing > 0)
+        {
+            Debug.Log($"{attacker.characterName} heals for {skill.userHealing} using {skill.skillName}!");
+            attacker.Heal(skill.userHealing); // Assuming Heal adds to health and caps it at max health
+        }
+
+        if (skill.speedChange != 0)
+        {
+            Debug.Log($"{attacker.characterName}'s speed before: {attacker.baseSpeed}");
+            attacker.baseSpeed = Mathf.Max(attacker.baseSpeed + skill.speedChange, 0);
+            Debug.Log($"{attacker.characterName}'s speed after: {attacker.baseSpeed}");
+        }
+
+        if (skill.powerChange != 0)
+        {
+            Debug.Log($"{attacker.characterName}'s power before: {attacker.basePower}");
+            attacker.basePower = Mathf.Max(attacker.basePower + skill.powerChange, 0);
+            Debug.Log($"{attacker.characterName}'s power after: {attacker.basePower}");
+        }
+
+        if (skill.defenseChange != 0)
+        {
+            Debug.Log($"{attacker.characterName}'s defense before: {attacker.baseDefense}");
+            attacker.baseDefense = Mathf.Max(attacker.baseDefense + skill.defenseChange, 0);
+            Debug.Log($"{attacker.characterName}'s defense after: {attacker.baseDefense}");
+        }
 
     }
 }
