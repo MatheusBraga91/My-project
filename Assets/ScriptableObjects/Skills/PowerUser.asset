@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: PowerUser
   baseHealth: 200
-  basePower: 0
+  basePower: 50
   baseSpeed: 160
   baseDefense: 60
   currentHealth: 200
-  currentPower: 0
+  currentPower: 50
   currentSpeed: 160
   currentDefense: 60
   activeHealthBar: 1

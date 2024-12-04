@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: HeavyAI
   m_EditorClassIdentifier: 
   characterName: Heavy AI
-  baseHealth: 900
-  basePower: 40
+  baseHealth: 120
+  basePower: 30
   baseSpeed: 20
   baseDefense: 60
-  currentHealth: 900
-  currentPower: 50
+  currentHealth: 120
+  currentPower: 30
   currentSpeed: 20
-  currentDefense: 20
+  currentDefense: 60
   activeHealthBar: 1
   defaultSkills:
   - {fileID: 11400000, guid: c7cfae4686700104a95a8405f59614ab, type: 2}

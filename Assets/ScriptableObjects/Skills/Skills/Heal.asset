@@ -17,13 +17,13 @@ MonoBehaviour:
   cooldown: 0
   description: Heal yourself for 50 Health!
   skillCategory: 2
-  affectsUser: 0
+  affectsUser: 1
   userDamage: 0
-  userHealing: 0
+  userHealing: 10
   speedChange: 0
   powerChange: 0
   defenseChange: 0
-  affectsEnemy: 1
+  affectsEnemy: 0
   enemySpeedChange: 0
-  enemyPowerChange: -10
+  enemyPowerChange: 0
   enemyDefenseChange: 0

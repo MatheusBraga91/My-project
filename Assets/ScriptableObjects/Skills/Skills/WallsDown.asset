@@ -25,5 +25,5 @@ MonoBehaviour:
   defenseChange: 0
   affectsEnemy: 1
   enemySpeedChange: 0
-  enemyPowerChange: -10
-  enemyDefenseChange: 0
+  enemyPowerChange: 0
+  enemyDefenseChange: -10

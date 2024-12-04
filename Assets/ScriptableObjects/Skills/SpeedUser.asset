@@ -20,7 +20,7 @@ MonoBehaviour:
   currentHealth: 120
   currentPower: 40
   currentSpeed: 100
-  currentDefense: 30
+  currentDefense: 60
   activeHealthBar: 1
   defaultSkills:
   - {fileID: 11400000, guid: 51441492535b7624b8de456541a31573, type: 2}

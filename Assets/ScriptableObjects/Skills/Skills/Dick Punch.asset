@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Dick Punch
   m_EditorClassIdentifier: 
   skillName: Dick Punch
-  power: 0
+  power: 15
   cooldown: 0
   description: A punch right in the dick
   skillCategory: 1
@@ -24,6 +24,6 @@ MonoBehaviour:
   powerChange: 0
   defenseChange: 0
   affectsEnemy: 1
-  enemySpeedChange: 0
-  enemyPowerChange: -10
+  enemySpeedChange: -5
+  enemyPowerChange: 0
   enemyDefenseChange: 0

@@ -4,6 +4,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MockupBattle : MonoBehaviour
 {
@@ -29,10 +30,16 @@ public class MockupBattle : MonoBehaviour
 
     void Start()
     {
+
+    
+
         // Initialize both player and enemy stats
         InitializePlayerStats();
         InitializeEnemyStats();
         
+          playerStats.SaveSnapshot();
+          enemyStats.SaveSnapshot();
+
         PopulateSkillButtons();
         SetPlayerBackViewImage();
         SetEnemyFrontViewImage();  // Set the enemy's front view image
@@ -148,8 +155,44 @@ public class MockupBattle : MonoBehaviour
             yield return new WaitForSeconds(1f); // Pause for readability
         }
 
-        Debug.Log(playerStats.currentHealth > 0 ? "Player Wins!" : "Enemy Wins!");
+    
     }
+
+    void Update()
+    {
+        // Check if the health is <= 0 for either player or enemy
+        if (playerStats.currentHealth <= 0 || enemyStats.currentHealth <= 0)
+        {
+            // Log who wins
+            Debug.Log(playerStats.currentHealth > 0 ? "Player Wins!" : "Enemy Wins!");
+
+            // Start coroutine to change scene after 3 seconds, regardless of who wins
+            StartCoroutine(ChangeSceneAfterDelay());
+        }
+    }
+
+    // Coroutine to wait 3 seconds before loading the new scene
+    private IEnumerator ChangeSceneAfterDelay()
+    {
+        // Wait for 3 seconds
+        yield return new WaitForSeconds(3);
+
+         // Restore the character stats to their original state before changing scenes
+    playerStats.RestoreSnapshot();
+    enemyStats.RestoreSnapshot();
+
+    // Log the restored stats for debugging
+    Debug.Log($"Restored Player Health: {playerStats.currentHealth}/{playerStats.baseHealth}");
+    Debug.Log($"Restored Enemy Health: {enemyStats.currentHealth}/{enemyStats.baseHealth}");
+
+
+        // Change to the "Training" scene
+        SceneManager.LoadScene("Training");
+    }
+
+
+
+
 
     void UseSkill(CharacterStats attacker, CharacterStats defender, Skill skill)
     {
@@ -161,21 +204,33 @@ public class MockupBattle : MonoBehaviour
 
 
              // Apply power change if the skill has one
-    if (skill.enemyPowerChange != 0)
+   
+
+         // Apply speed change if the skill has one
+    if (skill.enemySpeedChange != 0)
     {
-        // Log before and after defense values
-        Debug.Log($"{defender.characterName}'s defense before: {defender.basePower}");
+        // Log before and after speed values
+        Debug.Log($"{defender.characterName}'s speed before: {defender.baseSpeed}");
 
-        // Modify the defense (could be an increase or decrease based on skill)
-        defender.basePower += skill.enemyPowerChange;
+        // Calculate the minimum allowed speed (50% of base speed)
+        float minAllowedSpeed = (float)defender.baseSpeed * 0.5f;
 
-        // Ensure that defense doesn't go below 0 (optional)
-        defender.basePower = Mathf.Max(defender.basePower, 0);
+        // Modify the speed but ensure it doesn't go below 50% of the base speed
+        float newSpeed = (float)defender.currentSpeed + skill.enemySpeedChange;
 
-        Debug.Log($"{defender.characterName}'s defense after: {defender.basePower}");
-    }    
+        if (newSpeed < minAllowedSpeed)
+        {
+            // If the speed would go below 50% of base speed, prevent the change
+            Debug.Log($"{defender.characterName}'s speed can't go lower than {minAllowedSpeed} (50% of base speed!");
+        }
+        else
+        {
+            // Apply the speed change if within limits
+            defender.currentSpeed = (int)newSpeed; // Cast back to int after modification
+            Debug.Log($"{defender.characterName}'s speed after: {defender.currentSpeed}");
+        }
+    }
 
-        
  // Apply defense change if the skill has one
     if (skill.enemyDefenseChange != 0)
     {
@@ -227,4 +282,5 @@ public class MockupBattle : MonoBehaviour
         enemyHealthText.text = $"{enemyStats.currentHealth}/{enemyStats.baseHealth}";
         enemyHealthBar.fillAmount = (float)enemyStats.currentHealth / enemyStats.baseHealth;
     }
+
 }

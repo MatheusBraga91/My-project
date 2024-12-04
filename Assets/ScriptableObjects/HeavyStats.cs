@@ -13,32 +13,31 @@ public class CharacterStats : ScriptableObject
     public int baseDefense = 50;
 
     [Header("Dynamic Stats")]
-     public int currentHealth;
-     public int currentPower;
-     public int currentSpeed;
-     public int currentDefense;
-     public int activeHealthBar = 1;
+    public int currentHealth;
+    public int currentPower;
+    public int currentSpeed;
+    public int currentDefense;
+    public int activeHealthBar = 1;
 
     [Header("Skills")]
-    public Skill[] defaultSkills = new Skill[4]; 
+    public Skill[] defaultSkills = new Skill[4];
 
     [Header("Passive Skill")]
-    public PassiveSkill passiveSkill;  
+    public PassiveSkill passiveSkill;
 
     [Header("Trap Skills")]
     public TrapSkill[] trapSkills = new TrapSkill[5]; // Slot for 5 trap skills
 
-       [Header("Character Images")]
+    [Header("Character Images")]
     public Sprite frontViewImage; // Front view image
     public Sprite backViewImage;  // Back view image
 
+    [Header("Snapshots")]
+    private CharacterStatsSnapshot savedSnapshot;
 
-    
-
-// Method to add a passive skill to the character
+    // Method to add a passive skill to the character
     public bool AddPassiveSkill(PassiveSkill skill)
     {
-        // Ensure we only add passive skills to the passiveSkill slot
         if (skill != null && skill is PassiveSkill)
         {
             passiveSkill = skill;
@@ -51,7 +50,6 @@ public class CharacterStats : ScriptableObject
             return false;
         }
     }
-
 
     // Initialize stats based on the character's default health bar
     public void Initialize()
@@ -139,5 +137,55 @@ public class CharacterStats : ScriptableObject
     public void ModifyDefense(int amount)
     {
         currentDefense += amount;
+    }
+
+    // Save the current stats to a snapshot
+    public void SaveSnapshot()
+    {
+        savedSnapshot = new CharacterStatsSnapshot(this);
+        Debug.Log($"{characterName} snapshot saved!");
+    }
+
+    // Restore stats from the snapshot
+    public void RestoreSnapshot()
+    {
+        if (savedSnapshot != null)
+        {
+            savedSnapshot.Restore(this);
+            Debug.Log($"{characterName} snapshot restored!");
+        }
+        else
+        {
+            Debug.LogWarning("No snapshot to restore!");
+        }
+    }
+}
+
+// CharacterStatsSnapshot Class
+[System.Serializable]
+public class CharacterStatsSnapshot
+{
+    public int currentHealth;
+    public int currentPower;
+    public int currentSpeed;
+    public int currentDefense;
+    public int activeHealthBar;
+
+    public CharacterStatsSnapshot(CharacterStats stats)
+    {
+        currentHealth = stats.currentHealth;
+        currentPower = stats.currentPower;
+        currentSpeed = stats.currentSpeed;
+        currentDefense = stats.currentDefense;
+        activeHealthBar = stats.activeHealthBar;
+    }
+
+    public void Restore(CharacterStats stats)
+    {
+        stats.currentHealth = currentHealth;
+        stats.currentPower = currentPower;
+        stats.currentSpeed = currentSpeed;
+        stats.currentDefense = currentDefense;
+        stats.activeHealthBar = activeHealthBar;
     }
 }

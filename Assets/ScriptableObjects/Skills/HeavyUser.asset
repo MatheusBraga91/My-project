@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Heavy
   baseHealth: 120
-  basePower: 20
+  basePower: 30
   baseSpeed: 30
   baseDefense: 60
   currentHealth: 120
-  currentPower: 20
-  currentSpeed: 0
-  currentDefense: 40
+  currentPower: 30
+  currentSpeed: 10
+  currentDefense: 60
   activeHealthBar: 1
   defaultSkills:
   - {fileID: 11400000, guid: c7cfae4686700104a95a8405f59614ab, type: 2}

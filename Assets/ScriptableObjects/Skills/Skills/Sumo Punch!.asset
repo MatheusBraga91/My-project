@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Sumo Punch!
   m_EditorClassIdentifier: 
   skillName: Sumo Punch!
-  power: 0
+  power: 13
   cooldown: 0
   description: Does a Sumo chop into the enemy's face!
   skillCategory: 1
@@ -25,5 +25,5 @@ MonoBehaviour:
   defenseChange: 0
   affectsEnemy: 1
   enemySpeedChange: 0
-  enemyPowerChange: -10
+  enemyPowerChange: 0
   enemyDefenseChange: 0
