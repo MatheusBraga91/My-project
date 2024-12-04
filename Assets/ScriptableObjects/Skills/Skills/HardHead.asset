@@ -17,13 +17,13 @@ MonoBehaviour:
   cooldown: 0
   description: Deal massive damage to the enemy but takes some back!
   skillCategory: 1
-  affectsUser: 1
+  affectsUser: 0
   userDamage: 0
   userHealing: 0
-  speedChange: -5
+  speedChange: 0
   powerChange: 0
   defenseChange: 0
-  affectsEnemy: 0
+  affectsEnemy: 1
   enemySpeedChange: 0
   enemyPowerChange: 0
-  enemyDefenseChange: 0
+  enemyDefenseChange: -10
