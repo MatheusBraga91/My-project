@@ -3048,6 +3048,7 @@ MonoBehaviour:
   - {fileID: 556918689}
   - {fileID: 2093415965}
   trapSkillButton: {fileID: 1670627602}
+  enemyUIUpdater: {fileID: 987433257}
 --- !u!4 &1928064412
 Transform:
   m_ObjectHideFlags: 0

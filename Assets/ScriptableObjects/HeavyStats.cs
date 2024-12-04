@@ -13,11 +13,11 @@ public class CharacterStats : ScriptableObject
     public int baseDefense = 50;
 
     [Header("Dynamic Stats")]
-    [HideInInspector] public int currentHealth;
-    [HideInInspector] public int currentPower;
-    [HideInInspector] public int currentSpeed;
-    [HideInInspector] public int currentDefense;
-    [HideInInspector] public int activeHealthBar = 1;
+     public int currentHealth;
+     public int currentPower;
+     public int currentSpeed;
+     public int currentDefense;
+     public int activeHealthBar = 1;
 
     [Header("Skills")]
     public Skill[] defaultSkills = new Skill[4]; 

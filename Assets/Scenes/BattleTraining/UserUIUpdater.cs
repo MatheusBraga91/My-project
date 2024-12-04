@@ -11,27 +11,24 @@ public class UserUIUpdater : MonoBehaviour
     public Button[] skillButtons;
     public Button trapSkillButton;
 
-    public EnemyUIUpdater enemyUIUpdater; // Reference to the EnemyUIUpdater component
+    public EnemyUIUpdater enemyUIUpdater;
 
     void Start()
     {
-        if (enemyUIUpdater == null)
-        {
-            enemyUIUpdater = FindObjectOfType<EnemyUIUpdater>();
-        }
-
         StartCoroutine(InitializeUI());
     }
 
-    IEnumerator InitializeUI()
+   public IEnumerator InitializeUI()
     {
-        yield return new WaitUntil(() => BattleManager.userCharacterClone != null);
+        yield return new WaitUntil(() => BattleManager.Instance.userCharacter != null);
 
-        if (BattleManager.userCharacterClone != null)
+        if (BattleManager.Instance.userCharacter != null)
         {
+            var userCharacter = BattleManager.Instance.userCharacter;
+
             if (userImage != null)
             {
-                userImage.sprite = BattleManager.userCharacterClone.backViewImage;
+                userImage.sprite = userCharacter.backViewImage;
             }
             else
             {
@@ -44,27 +41,28 @@ public class UserUIUpdater : MonoBehaviour
         }
         else
         {
-            Debug.LogError("User character clone is not found!");
+            Debug.LogError("User character is not found!");
         }
     }
 
-   public void UpdateHealthUI()
+    public void UpdateHealthUI()
     {
-        if (BattleManager.userCharacterClone != null)
-        {
-            int currentHealth = BattleManager.userCharacterClone.currentHealth;
-            int baseHealth = BattleManager.userCharacterClone.baseHealth;
+        var userCharacter = BattleManager.Instance.userCharacter;
 
-            healthText.text = $"{currentHealth}/{baseHealth}";
-            healthBarImage.fillAmount = (float)currentHealth / baseHealth;
+        if (userCharacter != null)
+        {
+            healthText.text = $"{userCharacter.currentHealth}/{userCharacter.baseHealth}";
+            healthBarImage.fillAmount = (float)userCharacter.currentHealth / userCharacter.baseHealth;
         }
     }
 
     void PopulateSkillButtons()
     {
-        if (BattleManager.userCharacterClone != null && skillButtons.Length == 4)
+        var userCharacter = BattleManager.Instance.userCharacter;
+
+        if (userCharacter != null && skillButtons.Length == 4)
         {
-            Skill[] defaultSkills = BattleManager.userCharacterClone.defaultSkills;
+            Skill[] defaultSkills = userCharacter.defaultSkills;
 
             for (int i = 0; i < defaultSkills.Length && i < 4; i++)
             {
@@ -82,41 +80,27 @@ public class UserUIUpdater : MonoBehaviour
 
     void UseSkill(int skillIndex)
     {
-        if (BattleManager.userCharacterClone != null && BattleManager.aiCharacterClone != null)
-        {
-            Skill selectedSkill = BattleManager.userCharacterClone.defaultSkills[skillIndex];
+        var userCharacter = BattleManager.Instance.userCharacter;
+        var aiCharacter = BattleManager.Instance.aiCharacter;
 
-            BattleManager battleManager = FindObjectOfType<BattleManager>();
-            if (battleManager != null)
-            {
-                battleManager.ApplyDamage(BattleManager.userCharacterClone, BattleManager.aiCharacterClone, selectedSkill);
-            }
-            else
-            {
-                Debug.LogError("BattleManager instance not found!");
-            }
+        if (userCharacter != null && aiCharacter != null)
+        {
+            Skill selectedSkill = userCharacter.defaultSkills[skillIndex];
+
+            BattleManager.Instance.ApplyDamage(userCharacter, aiCharacter, selectedSkill);
 
             UpdateHealthUI();
-
-            if (enemyUIUpdater != null)
-            {
-                enemyUIUpdater.UpdateEnemyHealthUI(
-                    BattleManager.aiCharacterClone.currentHealth,
-                    BattleManager.aiCharacterClone.baseHealth
-                );
-            }
-            else
-            {
-                Debug.LogError("EnemyUIUpdater is not assigned!");
-            }
+            enemyUIUpdater?.UpdateEnemyHealthUI();
         }
     }
 
     void AssignRandomTrapSkill()
     {
-        if (BattleManager.userCharacterClone != null && trapSkillButton != null)
+        var userCharacter = BattleManager.Instance.userCharacter;
+
+        if (userCharacter != null && trapSkillButton != null)
         {
-            TrapSkill[] trapSkills = BattleManager.userCharacterClone.trapSkills;
+            TrapSkill[] trapSkills = userCharacter.trapSkills;
 
             if (trapSkills != null && trapSkills.Length > 0)
             {
@@ -129,10 +113,6 @@ public class UserUIUpdater : MonoBehaviour
             {
                 Debug.LogError("Trap skills are either null or empty!");
             }
-        }
-        else
-        {
-            Debug.LogError("TrapSkillButton or userCharacterClone is not found!");
         }
     }
 }

@@ -10,22 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8993226456f744b48bc9b11f4d832351, type: 3}
-  m_Name: HeavyStats 1
+  m_Name: HeavyAI
   m_EditorClassIdentifier: 
-  characterName: Heavy
-  baseHealth: 120
+  characterName: Heavy AI
+  baseHealth: 900
   basePower: 40
   baseSpeed: 20
-  baseDefense: 50
-  currentHealth: -25
+  baseDefense: 60
+  currentHealth: 900
   currentPower: 50
   currentSpeed: 20
-  currentDefense: 40
-  activeHealthBar: 3
+  currentDefense: 20
+  activeHealthBar: 1
   defaultSkills:
   - {fileID: 11400000, guid: c7cfae4686700104a95a8405f59614ab, type: 2}
   - {fileID: 11400000, guid: 2e2eb2cca70adaa4d8ec0da9b5cfa306, type: 2}
-  - {fileID: 11400000, guid: 0da6b7849e804154d950e7432875c175, type: 2}
+  - {fileID: 11400000, guid: 7103c0b2df0eb1d44b7dcda36f062865, type: 2}
   - {fileID: 11400000, guid: 57804a4668f0c4e498bfabbfdeb32824, type: 2}
   passiveSkill: {fileID: 11400000, guid: e507ed15ce2c92840a2c7ace4569bbcc, type: 2}
   trapSkills:

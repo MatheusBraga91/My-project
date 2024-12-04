@@ -5,82 +5,62 @@ public class BattleManager : MonoBehaviour
     public AIPanelController aiPanelController;
     public UserPanelController userPanelController;
     public EnemyUIUpdater enemyUIUpdater;
-
     public UserUIUpdater userUIUpdater;
 
+       public static BattleManager Instance { get; private set; }
 
-    public static CharacterStats aiCharacterClone; // Static so it persists across scenes
-    public static CharacterStats userCharacterClone;
+    public CharacterStats userCharacter;
+    public CharacterStats aiCharacter;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     public void StartBattle()
+{
+    if (aiPanelController == null || userPanelController == null)
     {
-        if (aiPanelController == null || userPanelController == null)
-        {
-            aiPanelController = FindObjectOfType<AIPanelController>(); // Manually find if not assigned
-            userPanelController = FindObjectOfType<UserPanelController>(); // Manually find if not assigned
-        }
-
-        if (aiPanelController.characterStats == null || userPanelController.characterStats == null)
-        {
-            Debug.LogError("Assigned characters are missing! Cannot start the battle.");
-            return;
-        }
-
-        aiCharacterClone = CloneCharacterStats(aiPanelController.characterStats);
-        userCharacterClone = CloneCharacterStats(userPanelController.characterStats);
-
-        // Initialize the cloned character stats (this is where we ensure currentHealth is set)
-        aiCharacterClone.Initialize();
-        userCharacterClone.Initialize();
-
-        Debug.Log("Battle started with cloned characters!");
-
-        DontDestroyOnLoad(gameObject);
-
-        UnityEngine.SceneManagement.SceneManager.LoadScene("BattleTraining");
+        aiPanelController = FindObjectOfType<AIPanelController>();
+        userPanelController = FindObjectOfType<UserPanelController>();
     }
 
-    private CharacterStats CloneCharacterStats(CharacterStats original)
+    if (aiPanelController.characterStats == null || userPanelController.characterStats == null)
     {
-        CharacterStats clone = ScriptableObject.CreateInstance<CharacterStats>();  // Use CreateInstance for ScriptableObject
-
-        // Now copy all the properties from the original to the clone
-        clone.characterName = original.characterName;
-        clone.baseHealth = original.baseHealth;
-        clone.basePower = original.basePower;
-        clone.baseSpeed = original.baseSpeed;
-        clone.baseDefense = original.baseDefense;
-        clone.passiveSkill = original.passiveSkill; // Assuming passiveSkill is a simple reference
-        clone.defaultSkills = CloneSkills(original.defaultSkills);  // Clone default skills array
-        clone.trapSkills = CloneTrapSkills(original.trapSkills);  // Clone trap skills array
-        clone.frontViewImage = original.frontViewImage; // Clone the frontViewImage too
-        clone.backViewImage = original.backViewImage; // Clone the frontViewImage too
-
-        return clone;
+        Debug.LogError("Assigned characters are missing! Cannot start the battle.");
+        return;
     }
 
-    private Skill[] CloneSkills(Skill[] originalSkills)
-    {
-        Skill[] cloneSkills = new Skill[originalSkills.Length];
-        for (int i = 0; i < originalSkills.Length; i++)
-        {
-            cloneSkills[i] = originalSkills[i];  // Assuming no deep copy needed for Skill objects, just references
-        }
-        return cloneSkills;
-    }
+    aiCharacter = aiPanelController.characterStats;
+    userCharacter = userPanelController.characterStats;
 
-    private TrapSkill[] CloneTrapSkills(TrapSkill[] originalTrapSkills)
-    {
-        TrapSkill[] cloneTrapSkills = new TrapSkill[originalTrapSkills.Length];
-        for (int i = 0; i < originalTrapSkills.Length; i++)
-        {
-            cloneTrapSkills[i] = originalTrapSkills[i];  // Assuming no deep copy needed for TrapSkill objects, just references
-        }
-        return cloneTrapSkills;
-    }
+    aiCharacter.Initialize();
+    userCharacter.Initialize();
 
-    // New method to apply skill damage
-    public void ApplyDamage(CharacterStats attacker, CharacterStats defender, Skill skill)
+    Debug.Log("Battle started with assigned characters!");
+
+    DontDestroyOnLoad(gameObject);
+    UnityEngine.SceneManagement.SceneManager.LoadScene("BattleTraining");
+
+    InitializeUIComponents();
+}
+
+private void InitializeUIComponents()
+{
+    enemyUIUpdater?.InitializeUI();
+    userUIUpdater?.InitializeUI();
+}
+
+
+    // Updated ApplyDamage method
+ public void ApplyDamage(CharacterStats attacker, CharacterStats defender, Skill skill)
     {
         if (skill == null)
         {
@@ -156,7 +136,7 @@ public class BattleManager : MonoBehaviour
 
      if (enemyUIUpdater != null)
         {
-            enemyUIUpdater.UpdateEnemyHealthUI(defender.currentHealth, defender.baseHealth);
+            enemyUIUpdater.UpdateEnemyHealthUI();
         }
     }
 

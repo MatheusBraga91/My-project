@@ -23,7 +23,7 @@ public class AIPanelController : MonoBehaviour
     public CharacterStats[] characterStatsList; // Array of multiple character stats for navigation
     public Button leftArrowButton; // Button to navigate to the previous character
     public Button rightArrowButton; // Button to navigate to the next character
-    private int currentCharacterIndex = 0; // Index of the currently displayed character
+    public int currentCharacterIndex = 0; // Index of the currently displayed character
 
     [Header("Character Front Image")]
     public Image frontViewImage; // Reference to the Image component for the character's front view image
@@ -134,7 +134,7 @@ public class AIPanelController : MonoBehaviour
         }
     }
 
-   private void NavigateAICharacter(int direction)
+private void NavigateAICharacter(int direction)
 {
     // Update the index cyclically
     currentCharacterIndex = (currentCharacterIndex + direction + characterStatsList.Length) % characterStatsList.Length;
@@ -147,6 +147,12 @@ public class AIPanelController : MonoBehaviour
 
     // Update the UI with the new character stats
     UpdateUI(characterStats);
+
+    // Update GameManager with the selected character's stats
+    if (GameManager.Instance != null)
+    {
+        GameManager.Instance.UpdateEnemyCharacterStats(); // Sync selected character with GameManager
+    }
 }
 
 private void UpdateAssignedAICharacter()

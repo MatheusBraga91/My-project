@@ -16,15 +16,14 @@ MonoBehaviour:
   power: 0
   cooldown: 0
   description: The enemy Defense goes down by 5.
-  skillCategory: 1
+  skillCategory: 2
   affectsUser: 0
   userDamage: 0
   userHealing: 0
   speedChange: 0
-  attackChange: 0
+  powerChange: 0
   defenseChange: 0
   affectsEnemy: 1
-  enemyDamage: 0
   enemySpeedChange: 0
-  enemyAttackChange: 0
-  enemyDefenseChange: -5
+  enemyPowerChange: -10
+  enemyDefenseChange: 0

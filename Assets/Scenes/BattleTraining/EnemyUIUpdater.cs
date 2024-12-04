@@ -1,65 +1,58 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Collections;
 
 public class EnemyUIUpdater : MonoBehaviour
 {
-    public TextMeshProUGUI enemyNameText;  // Reference to the TextMeshPro object in your UI
-    public Image enemyImage;  // Reference to the Image object for the front image view
-    public TextMeshProUGUI healthText;  // Reference to the health text UI
-    public Image healthBarImage; // Reference to the health bar image UI (fillable health bar)
+    public TextMeshProUGUI enemyNameText;
+    public Image enemyImage;
+    public TextMeshProUGUI healthText;
+    public Image healthBarImage;
 
-    private CharacterStats defender; // Variable to store the current defender (AI character)
+    private CharacterStats defender;
 
-    void Start()
+    private void Start()
     {
-        // Set the defender to the AI character from the BattleManager
-        if (BattleManager.aiCharacterClone != null)
+        StartCoroutine(InitializeUI());
+    }
+
+    public IEnumerator InitializeUI()
+    {
+        yield return new WaitUntil(() => BattleManager.Instance.aiCharacter != null);
+
+        defender = BattleManager.Instance.aiCharacter;
+
+        if (defender != null)
         {
-            defender = BattleManager.aiCharacterClone;
-
-            // Set the enemy's name in the TextMeshPro object
             enemyNameText.text = defender.characterName;
-
-            // Set the enemy's front image in the Image object
-            if (enemyImage != null)
-            {
-                enemyImage.sprite = defender.frontViewImage;
-            }
-            else
-            {
-                Debug.LogError("Enemy Image component is not assigned!");
-            }
-
-            // Initialize the health text and bar
-            UpdateEnemyHealthUI(defender.currentHealth, defender.baseHealth);
+            enemyImage.sprite = defender.frontViewImage;
+            UpdateEnemyHealthUI();
         }
         else
         {
-            Debug.LogError("AI character clone is not found!");
+            Debug.LogError("Enemy character not found during UI initialization.");
         }
     }
 
-    // This function will update both health text and health bar
-    // This function will update the enemy's UI whenever health changes
-    public void UpdateEnemyHealthUI(int currentHealth, int baseHealth)
+    public void UpdateEnemyHealthUI()
     {
-        if (enemyNameText != null)
+        if (defender == null)
         {
-            enemyNameText.text = defender.characterName;
+            Debug.LogWarning("Defender not set for UI Update.");
+            return;
         }
 
-        // Update health text (current health / base health)
-        if (healthText != null)
-        {
-            healthText.text = $"{currentHealth}/{baseHealth}";
-        }
+        healthText.text = $"{defender.currentHealth}/{defender.baseHealth}";
+        healthBarImage.fillAmount = (float)defender.currentHealth / defender.baseHealth;
 
-        // Update health bar (use current health percentage)
-        if (healthBarImage != null)
-        {
-            float healthPercentage = (float)currentHealth / baseHealth;
-            healthBarImage.fillAmount = healthPercentage;
-        }
+
+    }
+
+    private void UpdateMultipleHealthBars(CharacterStats character)
+    {
+        // Logic to handle layered health bars (if applicable)
+        // For example, updating UI for multiple health layers
+        Debug.Log("Updating multiple health bars not yet implemented.");
     }
 }

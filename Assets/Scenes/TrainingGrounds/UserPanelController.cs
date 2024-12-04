@@ -23,7 +23,10 @@ public class UserPanelController : MonoBehaviour
     public CharacterStats[] characterStatsList; // Array of multiple character stats for navigation
     public Button leftArrowButton; // Button to navigate to the previous character
     public Button rightArrowButton; // Button to navigate to the next character
-    private int currentCharacterIndex = 0; // Index of the currently displayed character
+    public int currentCharacterIndex = 0; // Index of the currently displayed character
+
+    [Header("Character Front Image")]
+    public Image frontViewImage; // Reference to the Image component for the character's front view image
 
     private void Start()
     {
@@ -64,6 +67,17 @@ public class UserPanelController : MonoBehaviour
         powerText.text = $"{characterStats.basePower}";
         speedText.text = $"{characterStats.baseSpeed}";
         defenseText.text = $"{characterStats.baseDefense}";
+
+
+             // Set front view image
+        if (frontViewImage != null && characterStats.frontViewImage != null)
+        {
+            frontViewImage.sprite = characterStats.frontViewImage;  // Set the front image of the character
+        }
+        else
+        {
+            Debug.LogError("Front View Image or character's frontViewImage is missing!");
+        }
 
         // Set up passive skill button
         if (characterStats.passiveSkill != null)
@@ -133,6 +147,12 @@ public class UserPanelController : MonoBehaviour
 
     // Update the UI with the new character stats
     UpdateUI(characterStats);
+
+      // Update GameManager with the selected character's stats
+    if (GameManager.Instance != null)
+    {
+        GameManager.Instance.UpdateUserCharacterStats(); // Sync selected character with GameManager
+    }
 }
 
 private void UpdateAssignedCharacter()
