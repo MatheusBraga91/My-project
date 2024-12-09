@@ -247,7 +247,12 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      battleUI_0: 3672574753482676323
+      battleUI_1: -8721677985499008390
+      battleUI_2: -4123661185170732040
+      battleUI_3: -1794297434817283823
+      battleUI_4: -9204932290034220633
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

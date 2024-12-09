@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8993226456f744b48bc9b11f4d832351, type: 3}
+  m_Name: PowerUser
+  m_EditorClassIdentifier: 
+  characterName: PowerUser
+  baseHealth: 100
+  basePower: 75
+  baseSpeed: 40
+  baseDefense: 40
+  currentHealth: 100
+  currentPower: 75
+  currentSpeed: 40
+  currentDefense: 40
+  activeHealthBar: 1
+  defaultSkills:
+  - {fileID: 11400000, guid: 0da6b7849e804154d950e7432875c175, type: 2}
+  - {fileID: 11400000, guid: 5c68e71968362cc4abf9b2f4fea9192b, type: 2}
+  - {fileID: 11400000, guid: 2e2eb2cca70adaa4d8ec0da9b5cfa306, type: 2}
+  - {fileID: 11400000, guid: 5c68e71968362cc4abf9b2f4fea9192b, type: 2}
+  passiveSkill: {fileID: 11400000, guid: 1bac8b3b2040c634fac4d8ab985dccb4, type: 2}
+  trapSkills:
+  - {fileID: 11400000, guid: e45e31a817420e141af12326c42ee0f1, type: 2}
+  - {fileID: 11400000, guid: e45e31a817420e141af12326c42ee0f1, type: 2}
+  - {fileID: 11400000, guid: e45e31a817420e141af12326c42ee0f1, type: 2}
+  - {fileID: 11400000, guid: e45e31a817420e141af12326c42ee0f1, type: 2}
+  - {fileID: 11400000, guid: e45e31a817420e141af12326c42ee0f1, type: 2}
+  frontViewImage: {fileID: 21300000, guid: e7ea301d0a4c7164fb7cf5cdc687f093, type: 3}
+  backViewImage: {fileID: 21300000, guid: ce6c2a81bc58a734f96e1196f6aea152, type: 3}

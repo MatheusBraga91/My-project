@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: HardHead
   m_EditorClassIdentifier: 
   skillName: Hard Head
-  power: 20
+  power: 40
   cooldown: 0
   description: Deal massive damage to the enemy but takes some back!
   skillCategory: 1
-  affectsUser: 0
-  userDamage: 0
+  affectsUser: 1
+  userDamage: 10
   userHealing: 0
   speedChange: 0
   powerChange: 0

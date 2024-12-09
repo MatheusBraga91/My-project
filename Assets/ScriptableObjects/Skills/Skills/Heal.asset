@@ -18,8 +18,8 @@ MonoBehaviour:
   description: Heal yourself for 50 Health!
   skillCategory: 2
   affectsUser: 1
-  userDamage: 0
-  userHealing: 10
+  userDamage: 50
+  userHealing: 0
   speedChange: 0
   powerChange: 0
   defenseChange: 0

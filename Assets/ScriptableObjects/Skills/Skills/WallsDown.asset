@@ -15,7 +15,7 @@ MonoBehaviour:
   skillName: Walls Down
   power: 0
   cooldown: 0
-  description: The enemy Defense goes down by 5.
+  description: The enemy Defense goes down!
   skillCategory: 2
   affectsUser: 0
   userDamage: 0
@@ -26,4 +26,4 @@ MonoBehaviour:
   affectsEnemy: 1
   enemySpeedChange: 0
   enemyPowerChange: 0
-  enemyDefenseChange: -10
+  enemyDefenseChange: -3

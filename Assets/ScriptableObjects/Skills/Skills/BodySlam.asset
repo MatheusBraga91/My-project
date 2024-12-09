@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BodySlam
   m_EditorClassIdentifier: 
   skillName: Body Slam
-  power: 30
+  power: 70
   cooldown: 0
   description: Attack your enemy with your whole body! 30 power attack!
   skillCategory: 1
